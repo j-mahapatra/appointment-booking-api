@@ -17,6 +17,9 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, 'Role is not provided.'],
     },
+    free_slots: {
+      type: [String],
+    },
   },
   {
     timestamps: true,
