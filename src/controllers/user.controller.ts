@@ -80,3 +80,28 @@ export async function logoutUser(req: RequestWithUserDataType, res: Response) {
     return res.status(500).json({ message: 'Internal Server Error' });
   }
 }
+
+export async function getAllPhysios(
+  req: RequestWithUserDataType,
+  res: Response
+) {
+  try {
+    const user = req.user;
+
+    if (req.user?.role !== 'SALES') {
+      return res
+        .status(403)
+        .json({ message: 'User does not have permissions.' });
+    }
+
+    const physioData = await User.find({ role: 'PHYSIO' })
+      .populate({
+        path: 'free_slots',
+      })
+      .select('-password -__v');
+
+    return res.status(200).json({ data: physioData });
+  } catch (error) {
+    return res.status(500).json({ message: 'Internal Server Error' });
+  }
+}

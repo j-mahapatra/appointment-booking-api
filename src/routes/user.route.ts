@@ -1,6 +1,7 @@
 import express from 'express';
 
 import {
+  getAllPhysios,
   loginUser,
   logoutUser,
   registerUser,
@@ -12,5 +13,6 @@ const router = express.Router();
 router.put('/register', registerUser);
 router.post('/login', loginUser);
 router.post('/logout', checkAuth, logoutUser);
+router.get('/get-physios', checkAuth, getAllPhysios);
 
 export default router;

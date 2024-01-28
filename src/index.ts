@@ -15,7 +15,7 @@ const MONGODB_URI = process.env.MONGODB_URI!;
 connectToDb(MONGODB_URI);
 
 const corsOptions = {
-  origin: ['*'],
+  origin: [process.env.CLIENT_URL!],
   credentials: true,
   exposedHeaders: ['set-cookie'],
 };
