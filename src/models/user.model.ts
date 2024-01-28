@@ -15,10 +15,17 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
+      enum: ['PHYSIO', 'PATIENT', 'SALES'],
       required: [true, 'Role is not provided.'],
     },
     free_slots: {
-      type: [String],
+      type: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'Slot',
+        },
+      ],
+      default: [],
     },
   },
   {

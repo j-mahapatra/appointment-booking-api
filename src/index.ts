@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 
 import connectToDb from './utils/database';
 import userRouter from './routes/user.route';
+import slotRouter from './routes/slot.route';
 
 dotenv.config();
 const app: Express = express();
@@ -26,6 +27,7 @@ app.use(cookieParser());
 
 // Routers
 app.use('/api/user', userRouter);
+app.use('/api/slots', slotRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
