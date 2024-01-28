@@ -1,7 +1,8 @@
 import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
-import connectToDb from './config/database';
+
+import connectToDb from './utils/database';
 
 dotenv.config();
 const app: Express = express();
