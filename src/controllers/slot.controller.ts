@@ -23,18 +23,14 @@ export async function createBookingSlot(
     }
 
     slots.forEach(async (slot: string) => {
-      const alreadyPresent = await Slot.findOne({ slot, day });
+      const createdSlot = await Slot.create({ slot, day });
 
-      if (!alreadyPresent) {
-        const createdSlot = await Slot.create({ slot, day });
-
-        await User.updateOne(
-          { email: req.user?.email },
-          {
-            $push: { free_slots: createdSlot },
-          }
-        );
-      }
+      await User.updateOne(
+        { email: req.user?.email },
+        {
+          $push: { free_slots: createdSlot },
+        }
+      );
     });
 
     return res.status(200).json({ message: 'Slot registered.' });
