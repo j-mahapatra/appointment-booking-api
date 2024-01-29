@@ -62,3 +62,22 @@ export async function getUserSlots(
     return res.status(500).json({ message: 'Internal Server Error' });
   }
 }
+
+export async function bookSlot(req: RequestWithUserDataType, res: Response) {
+  try {
+    const { slotId } = req.body;
+
+    const slot = await Slot.findOne({ _id: slotId });
+
+    if (!slot) {
+      return res.status(404).json({ message: 'Time slot not found' });
+    }
+
+    slot.isBooked = true;
+    await slot.save();
+
+    return res.status(200).json({ message: 'Time slot booked' });
+  } catch (error) {
+    return res.status(500).json({ message: 'Internal Server Error' });
+  }
+}
