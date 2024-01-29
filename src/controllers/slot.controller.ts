@@ -81,3 +81,16 @@ export async function bookSlot(req: RequestWithUserDataType, res: Response) {
     return res.status(500).json({ message: 'Internal Server Error' });
   }
 }
+
+export async function getAllAvailableSlots(
+  req: RequestWithUserDataType,
+  res: Response
+) {
+  try {
+    const slots = await Slot.find({ isBooked: false }).select(
+      '_id slot day isBooked'
+    );
+
+    return res.status(200).json({ slots });
+  } catch (error) {}
+}
