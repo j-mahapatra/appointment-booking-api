@@ -23,14 +23,14 @@ export async function createBookingSlot(
     }
 
     user.free_slots.forEach(async (slot) => {
-      await Slot.deleteOne({ _id: slot._id });
+      await Slot.deleteOne({ _id: slot._id, day: day });
     });
 
-    await User.findOneAndUpdate(
+    await user.updateOne(
       {
         email: req.user?.email,
       },
-      { $set: { free_slots: [] } }
+      { $pull: { free_slots: { $elemMatch: { day: day } } } }
     );
 
     slots.forEach(async (slot: string) => {
@@ -46,6 +46,7 @@ export async function createBookingSlot(
 
     return res.status(200).json({ message: 'Slot registered.' });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({ message: 'Internal Server Error' });
   }
 }
