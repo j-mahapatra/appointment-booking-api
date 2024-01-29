@@ -22,6 +22,17 @@ export async function createBookingSlot(
         .json({ message: 'User does not have permissions.' });
     }
 
+    user.free_slots.forEach(async (slot) => {
+      await Slot.deleteOne({ _id: slot._id });
+    });
+
+    await User.findOneAndUpdate(
+      {
+        email: req.user?.email,
+      },
+      { $set: { free_slots: [] } }
+    );
+
     slots.forEach(async (slot: string) => {
       const createdSlot = await Slot.create({ slot, day });
 
