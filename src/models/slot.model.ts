@@ -8,6 +8,10 @@ const slotSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    remarks: {
+      type: String,
+      default: '',
+    },
   },
   {
     timestamps: true,

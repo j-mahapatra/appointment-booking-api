@@ -73,7 +73,7 @@ export async function getUserSlots(
 
 export async function bookSlot(req: RequestWithUserDataType, res: Response) {
   try {
-    const { slotId } = req.body;
+    const { slotId, remarks } = req.body;
 
     const slot = await Slot.findOne({ _id: slotId });
 
@@ -82,6 +82,7 @@ export async function bookSlot(req: RequestWithUserDataType, res: Response) {
     }
 
     slot.isBooked = true;
+    slot.remarks = remarks;
     await slot.save();
 
     return res.status(200).json({ message: 'Time slot booked' });
